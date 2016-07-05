@@ -53,9 +53,15 @@ namespace Discord
         public event EventHandler<ChannelUserEventArgs> UserIsTyping = delegate { };
         /// <summary>When a new user joins a server. Discord API Event name: GUILD_MEMBER_ADD.</summary>
         public event EventHandler<UserEventArgs> UserJoined = delegate { };
+        /// <summary>When a user joins a voice channel.
+        /// Discord API Event name: VOICE_STATE_UPDATE.</summary>
+        public event EventHandler<ChannelUserEventArgs> UserJoinedVoiceChannel = delegate { };
         /// <summary>When a user is removed from a server (leave/kick/ban).
         /// Discord API Event name: GUILD_MEMBER_REMOVE.</summary>
         public event EventHandler<UserEventArgs> UserLeft = delegate { };
+        /// <summary>When a user leaves a voice channel.
+        /// Discord API Event name: VOICE_STATE_UPDATE.</summary>
+        public event EventHandler<ChannelUserEventArgs> UserLeftVoiceChannel = delegate { };
         /// <summary>When a server member is updated.
         /// Discord API Event name: GUILD_MEMBER_UPDATE or PRESENCE_UPDATE or VOICE_STATE_UPDATE.</summary>
         public event EventHandler<UserUpdatedEventArgs> UserUpdated = delegate { };
@@ -112,8 +118,12 @@ namespace Discord
             => OnEvent(UserIsTyping, new ChannelUserEventArgs(channel, user));
         private void OnUserJoined(User user)
             => OnEvent(UserJoined, new UserEventArgs(user));
+        private void OnUserJoinedVoiceChannel(Channel channel, User user)
+            => OnEvent(UserJoinedVoiceChannel, new ChannelUserEventArgs(channel, user));
         private void OnUserLeft(User user)
             => OnEvent(UserLeft, new UserEventArgs(user));
+        private void OnUserLeftVoiceChannel(Channel channel, User user)
+            => OnEvent(UserLeftVoiceChannel, new ChannelUserEventArgs(channel, user));
         private void OnUserUnbanned(User user)
             => OnEvent(UserUnbanned, new UserEventArgs(user));
         private void OnUserUpdated(User before, User after)
