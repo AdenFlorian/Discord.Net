@@ -68,6 +68,8 @@ namespace Discord
         internal string Path => $"{Server?.Name ?? "[Private]"}/{Name}";
         /// <summary> Gets true if this is a private chat with another user. </summary>
         public bool IsPrivate => Recipient != null;
+        /// <summary> Gets true if this is the AFK voice channel. </summary>
+        public bool IsAFK => this == Server.AFKChannel;
         /// <summary> Gets the string used to mention this channel. </summary>
         public string Mention => $"<#{Id}>";
         /// <summary> Gets a collection of all messages the client has seen posted in this channel. This collection does not guarantee any ordering. </summary>
