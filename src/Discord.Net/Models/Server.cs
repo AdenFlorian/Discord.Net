@@ -177,23 +177,20 @@ namespace Discord
                     _users = new ConcurrentDictionary<ulong, Member>(2, (int)(model.MemberCount * 1.05));
                 _userCount = model.MemberCount.Value;
             }
-            if (!model.IsLarge)
+            if (model.Members != null)
             {
-                if (model.Members != null)
-                {
-                    foreach (var subModel in model.Members)
-                        AddUser(subModel.User.Id, true, false).Update(subModel);
-                }
-                if (model.VoiceStates != null)
-                {
-                    foreach (var subModel in model.VoiceStates)
-                        GetUser(subModel.UserId)?.Update(subModel);
-                }
-                if (model.Presences != null)
-                {
-                    foreach (var subModel in model.Presences)
-                        GetUser(subModel.User.Id)?.Update(subModel);
-                }
+                foreach (var subModel in model.Members)
+                    AddUser(subModel.User.Id, true, false).Update(subModel);
+            }
+            if (model.VoiceStates != null)
+            {
+                foreach (var subModel in model.VoiceStates)
+                    GetUser(subModel.UserId)?.Update(subModel);
+            }
+            if (model.Presences != null)
+            {
+                foreach (var subModel in model.Presences)
+                    GetUser(subModel.User.Id)?.Update(subModel);
             }
         }
 
